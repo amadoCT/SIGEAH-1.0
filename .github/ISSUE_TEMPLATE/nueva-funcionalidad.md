@@ -2,7 +2,7 @@
 name: Nueva funcionalidad
 about: Propón o desarrolla una nueva funcionalidad para SIGEAH.
 title: "[feature]"
-labels: enhancement
+labels: bug, enhancement
 assignees: ''
 
 ---
