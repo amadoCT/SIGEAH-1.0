@@ -115,3 +115,53 @@ def registrar_emergencia(conexion: sqlite3.Connection, datos: dict) -> Emergenci
         raise RuntimeError("No se pudo guardar la emergencia.") from error
 
     return obtener_emergencia(conexion, cursor.lastrowid)
+
+
+def listar_emergencias(
+    conexion: sqlite3.Connection,
+    texto: str | None = None,
+    tipo: str | None = None,
+    estado: str | None = None,
+    prioridad: str | None = None,
+) -> list[Emergencia]:
+    """Lista emergencias, con búsqueda y filtros opcionales.
+
+    Args:
+        conexion: Conexión SQLite abierta.
+        texto: Fragmento a buscar en el título o la ubicación.
+        tipo: Tipo de emergencia exacto (sin distinguir mayúsculas).
+        estado: Estado exacto (sin distinguir mayúsculas).
+        prioridad: Prioridad exacta (sin distinguir mayúsculas).
+
+    Returns:
+        Lista de emergencias que cumplen todos los criterios dados,
+        de la más reciente a la más antigua.
+
+    Raises:
+        RuntimeError: Si ocurre un error al consultar la base de datos.
+    """
+    condiciones = []
+    parametros = []
+    if texto and texto.strip():
+        patron = f"%{texto.strip()}%"
+        condiciones.append("(titulo LIKE ? OR ubicacion LIKE ?)")
+        parametros.extend([patron, patron])
+    for columna, valor in (
+        ("tipo", tipo),
+        ("estado", estado),
+        ("prioridad", prioridad),
+    ):
+        if valor and valor.strip():
+            condiciones.append(f"{columna} = ? COLLATE NOCASE")
+            parametros.append(valor.strip())
+
+    consulta = "SELECT * FROM emergencias"
+    if condiciones:
+        consulta += " WHERE " + " AND ".join(condiciones)
+    consulta += " ORDER BY id DESC"
+
+    try:
+        filas = conexion.execute(consulta, parametros).fetchall()
+    except sqlite3.Error as error:
+        raise RuntimeError("No se pudo consultar las emergencias.") from error
+    return [Emergencia(**dict(fila)) for fila in filas]
