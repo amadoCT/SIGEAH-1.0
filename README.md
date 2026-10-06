@@ -2,9 +2,9 @@
 
 # Integrantes:
 
-Jeremias Aguirre
-Amado Carrasco
-Aritzys Morales
+Jeremias Aguirre,
+Amado Carrasco,
+Aritzys Morales.
 
 ## 1. Problema, usuarios y alcance
 
@@ -12,8 +12,8 @@ Aritzys Morales
 mensajes sueltos, lo que dificulta consultarla y saber en qué estado está
 cada atención.
 
-**Personas usuarias:** <por ejemplo, personal de coordinación de emergencias
-de una comunidad u organización humanitaria>.
+**Personas usuarias:** Seria el personal de coordinación de emergencias
+de una comunidad u organización humanitaria o personal de los bomberos, Sinaproc o entidades similares.
 
 **Qué hace:** registrar, consultar, filtrar y actualizar el estado de
 emergencias, guardándolas de forma persistente.
@@ -26,15 +26,15 @@ emergencias, guardándolas de forma persistente.
 
 ## 2. Stack tecnológico
 
-| Componente          | Tecnología                                             |
-| ------------------- | ------------------------------------------------------ |
-| Lenguaje            | Python 3.10 o superior (<versión usada por el equipo>) |
-| Base de datos       | SQLite (módulo `sqlite3` de Python)                    |
-| Interfaz de consola | `rich`                                                 |
-| Interfaz gráfica    | `customtkinter`                                        |
-| Pruebas             | `pytest`                                               |
-| Estilo              | `ruff`                                                 |
-| Automatización      | GitHub Actions                                         |
+| Componente          | Tecnología                          |
+| ------------------- | ----------------------------------- |
+| Lenguaje            | Python 3.10 o superior              |
+| Base de datos       | SQLite (módulo `sqlite3` de Python) |
+| Interfaz de consola | `rich`                              |
+| Interfaz gráfica    | `customtkinter`                     |
+| Pruebas             | `pytest`                            |
+| Estilo              | `ruff`                              |
+| Automatización      | GitHub Actions                      |
 
 ## 3. Instalación
 
@@ -81,21 +81,20 @@ ruff check .          # revisión de estilo
 
 ## 7. Equipo
 
-| Integrante                       | Rol                                                     |
-| -------------------------------- | ------------------------------------------------------- |
-| <Nombre A> (@usuario)            | Coordinación, repositorio, workflows y documentación    |
-| <Nombre B> (@jeremias28a-dotcom) | Lógica y base de datos, interfaces de consola y gráfica |
-| <Nombre C> (@usuario)            | Validaciones, actualización de estado y pruebas         |
+| Integrante                             | Rol                                                     |
+| -------------------------------------- | ------------------------------------------------------- |
+| Amado Carrasco (@amadoCT)              | Coordinación, repositorio, workflows y documentación    |
+| Jeremias Aguirre (@jeremias28a-dotcom) | Lógica y base de datos, interfaces de consola y gráfica |
+| Aritzys Morales (@spikechim)           | Validaciones, actualización de estado y pruebas         |
 
 ## 8. Herramientas de análisis y calidad
 
 - **Ruff:** estilo y formato, ejecutado en GitHub Actions.
 - **Pytest:** pruebas automáticas, ejecutadas en GitHub Actions.
-- **Snyk:** análisis de seguridad de dependencias. <Describir cómo se usa:
-  importado desde snyk.io o ejecutado en un workflow.>
+- **Snyk:** análisis de seguridad de dependencias.
 
 ## 9. Organización del trabajo
 
-- 📋 Tablero del proyecto: <URL del tablero de GitHub Projects>
+- 📋 Tablero del proyecto: https://github.com/users/amadoCT/projects/1
 - 🔀 Flujo de trabajo (GitHub Flow, ramas, revisiones y Conventional Commits):
   [docs/flujo_trabajo.md](docs/flujo_trabajo.md)
