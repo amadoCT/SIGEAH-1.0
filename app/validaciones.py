@@ -130,3 +130,4 @@ def validar_transicion_estado(estado_actual, estado_nuevo):
     if nuevo not in TRANSICIONES[actual]:
         raise ValueError(f"No se puede cambiar de '{actual}' a '{nuevo}'.")
     return nuevo
+# Validacion de tipos verificada
