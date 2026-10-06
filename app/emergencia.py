@@ -27,7 +27,19 @@ class Emergencia:
 
 
 def validar_emergencia(datos: dict) -> dict:
-    """Valida y limpia todos los campos de una emergencia usando las validaciones de C."""
+    """Valida y limpia todos los campos de una emergencia.
+
+    Args:
+        datos: Diccionario con titulo, tipo, descripcion, ubicacion,
+            fecha, prioridad y estado.
+
+    Returns:
+        Diccionario con los mismos campos ya validados y normalizados.
+
+    Raises:
+        TypeError: Si ``datos`` no es un diccionario.
+        ValueError: Si algún campo no es válido."""
+
     if not isinstance(datos, dict):
         raise TypeError("Los datos de la emergencia deben ser un diccionario.")
 
@@ -49,7 +61,15 @@ def validar_emergencia(datos: dict) -> dict:
 def obtener_emergencia(
     conexion: sqlite3.Connection, id_emergencia: int
 ) -> Emergencia | None:
-    """Busca una emergencia por su identificador."""
+    """Busca una emergencia por su identificador.
+
+    Args:
+        conexion: Conexión SQLite abierta.
+        id_emergencia: Identificador de la emergencia.
+
+    Returns:
+        La emergencia encontrada, o None si no existe."""
+
     fila = conexion.execute(
         "SELECT * FROM emergencias WHERE id = ?", (id_emergencia,)
     ).fetchone()
@@ -57,7 +77,20 @@ def obtener_emergencia(
 
 
 def registrar_emergencia(conexion: sqlite3.Connection, datos: dict) -> Emergencia:
-    """Valida y guarda una nueva emergencia."""
+    """Valida y guarda una nueva emergencia.
+
+    Args:
+        conexion: Conexión SQLite abierta.
+        datos: Diccionario con los campos de la emergencia.
+
+    Returns:
+        La emergencia guardada, con su id asignado.
+
+    Raises:
+        TypeError: Si ``datos`` no es un diccionario.
+        ValueError: Si algún campo no es válido.
+        RuntimeError: Si falla el guardado en la base de datos."""
+
     limpios = validar_emergencia(datos)
     try:
         cursor = conexion.execute(
