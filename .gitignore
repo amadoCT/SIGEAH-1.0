@@ -1,0 +1,29 @@
+# Archivos de entorno y variables sensibles
+.env
+*.env
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de base de datos SQLite
+*.db
+*.sqlite3
+data/*.db
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+
+# Testing y cobertura
+.pytest_cache/
+.coverage
+htmlcov/
