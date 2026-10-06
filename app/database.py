@@ -3,6 +3,8 @@
 import os
 import sqlite3
 from pathlib import Path
+from app.validaciones import validar_id, validar_transicion_estado
+
 
 RUTA_POR_DEFECTO = Path("data") / "sigeah.db"
 
@@ -64,3 +66,35 @@ def inicializar_db(conexion: sqlite3.Connection) -> None:
         """
     )
     conexion.commit()
+
+
+def obtener_emergencia_por_id(conexion: sqlite3.Connection, id_emergencia) -> sqlite3.Row | None:
+    """Busca y devuelve una emergencia por su ID."""
+    id_validado = validar_id(id_emergencia)
+    cursor = conexion.execute(
+        "SELECT * FROM emergencias WHERE id = ?", (id_validado,)
+    )
+    return cursor.fetchone()
+
+
+def actualizar_estado(conexion: sqlite3.Connection, id_emergencia, nuevo_estado: str) -> dict:
+    """Valida y actualiza el estado de una emergencia existente en la base de datos."""
+    # 1. Validar que la emergencia exista
+    emergencia = obtener_emergencia_por_id(conexion, id_emergencia)
+    if not emergencia:
+        raise ValueError(f"No se encontró ninguna emergencia con el ID {id_emergencia}.")
+
+    # 2. Validar la transición del estado actual al nuevo
+    estado_actual = emergencia["estado"]
+    estado_validado = validar_transicion_estado(estado_actual, nuevo_estado)
+
+    # 3. Actualizar en la base de datos
+    conexion.execute(
+        "UPDATE emergencias SET estado = ? WHERE id = ?",
+        (estado_validado, emergencia["id"]),
+    )
+    conexion.commit()
+
+    # 4. Devolver la emergencia actualizada como diccionario
+    emergencia_actualizada = obtener_emergencia_por_id(conexion, emergencia["id"])
+    return dict(emergencia_actualizada)
